@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Coin Details</h1>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ coin.material }}</span>
+    <p>Country: {{ coin.country }}</p>
+    <p>Century: {{ coin.century }}</p>
+    <p>Description: {{ coin.description }}</p>
+  </div>
+</div>
+
+{% endblock %}

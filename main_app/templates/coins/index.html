@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Coins List</h1>
+
+{% for coin in coins %}
+<!-- line below to implement Details Page-->
+<!-- <a href="/coins/{{ coin.id }}"> -->
+<!-- the line below replace the "hardcoded" one above and 'detail' referes to urlpatterns -->
+<a href="{% url 'detail' coin.id %}">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ coin.material }}</span>
+      <p>Country: {{ coin.country }}</p>
+      <p>Century: {{ coin.century }}</p>
+      <p>Description: {{ coin.description }}</p>
+    </div>
+  </div>
+</a>
+{% endfor %}
+
+{% endblock %}
