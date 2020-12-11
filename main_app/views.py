@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Coin #require MODEL additng this line
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 
@@ -29,3 +29,10 @@ def coins_detail(request, coin_id):
   coin = Coin.objects.get(id=coin_id)
   return render(request, 'coins/detail.html', {'coin': coin}) #{'coin': coin} - this is what we want to inject to Cats above
 
+class CoinUpdate(UpdateView):
+  model = Coin
+  fields = '__all__'
+
+class CoinDelete(DeleteView):
+  model = Coin
+  success_url = '/coins/'

@@ -10,6 +10,13 @@
     <p>Century: {{ coin.century }}</p>
     <p>Description: {{ coin.description }}</p>
   </div>
+ <!-- adding links in accordiance with the routes -->
+  <div class="card-action">
+    <a href="{% url 'coins_update' coin.id %}">Edit</a>
+    <a href="{% url 'coins_delete' coin.id %}">Delete</a>
+  </div>
+
+
 </div>
 
 {% endblock %}
