@@ -1,27 +1,17 @@
 from django.shortcuts import render
 from .models import Coin #require MODEL additng this line
 
-# Add the Coins class & list and view function below the imports
-# class Coin:  # Note that parens are optional if not inheriting from another class
-#   def __init__(self, material, country, century, description):
-#     self.material = material
-#     self.country = country
-#     self.century = century
-#     self.description = description
-
-# coins = [
-#   Coin('silver', 'Russian Impire', 17, 'very rear'),
-#   Coin('copper', 'Russian Impire', 18, 'was launched to optimize production costs'),
-#   Coin('brass', 'USSR', 20, 'very common coin')
-# ]
+from django.views.generic.edit import CreateView
 
 # Create your views here.
 
-from django.http import HttpResponse
+class CoinCreate(CreateView):
+  model = Coin
+  fields = '__all__'
 
 # Define the HOME view
 def home(request):
-  return HttpResponse('<h1>Do you like coins?</h1>')# simmiluar to res.send
+  return render(request, 'home.html') 
 
 # Define the ABOUT view
 def about(request):
