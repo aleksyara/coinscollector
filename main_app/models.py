@@ -6,7 +6,7 @@ from django.urls import reverse
 DEALS = (
     ('E', 'Exchange'),
     ('S', 'Sale'),
-    ('F', 'Free')
+    ('D', 'Donate')
 )
 
 class Coin(models.Model):
@@ -27,11 +27,12 @@ class Coin(models.Model):
 # Add new Feeding model below Cat model
 class Trading(models.Model):
     date = models.DateField()
-    deals = models.CharField(
+    deal = models.CharField(
         max_length=1,
         choices=DEALS,
         default=DEALS[0][0] 
         )
+    # Create a coin_id FK, since a Trading belongs to a Cat
     coin = models.ForeignKey(Coin, on_delete=models.CASCADE)
 
     def __str__(self):
