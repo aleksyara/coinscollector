@@ -21,6 +21,13 @@
   </div>
 
   <div class="col s6">
+      <!-- displaying new TraidingForm -->
+      <form method="post">
+        {% csrf_token %}
+        {{ trading_form.as_p }}
+        <input type="submit" class="btn" value="Add Trading">
+      </form>
+
     <table class="striped">
       <thead>
         <tr><th>Date</th><th>Deal</th></tr>

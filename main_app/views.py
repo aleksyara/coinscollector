@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Coin #require MODEL additng this line
+from .forms import TradingForm
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -27,7 +28,11 @@ def coins_detail(request, coin_id):
   #find the coin that has the id of coin_id
   # it's better use Cat.objects.get rather then .filter
   coin = Coin.objects.get(id=coin_id)
-  return render(request, 'coins/detail.html', {'coin': coin}) #{'coin': coin} - this is what we want to inject to Cats above
+
+  trading_form = TradingForm()
+  return render(request, 'coins/detail.html', {
+    'coin': coin, 'trading_form': trading_form 
+    })
 
 class CoinUpdate(UpdateView):
   model = Coin
