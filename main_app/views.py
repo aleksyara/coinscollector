@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Coin #require MODEL additng this line
 from .forms import TradingForm
 
@@ -33,6 +33,16 @@ def coins_detail(request, coin_id):
   return render(request, 'coins/detail.html', {
     'coin': coin, 'trading_form': trading_form 
     })
+  
+def add_trading(request, coin_id):
+  form = TradingForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    # don't save the form to the db until it has the cat_id assigned
+    new_trading = form.save(commit=False) # - every time whe
+    new_trading.coin_id = coin_id
+    new_trading.save()
+  return redirect('detail', coin_id=coin_id)
 
 class CoinUpdate(UpdateView):
   model = Coin

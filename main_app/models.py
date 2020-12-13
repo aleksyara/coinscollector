@@ -23,18 +23,20 @@ class Coin(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'coin_id': self.id})
 
-
 # Add new Feeding model below Cat model
 class Trading(models.Model):
-    date = models.DateField()
+    date = models.DateField('Trading Date')
     deal = models.CharField(
         max_length=1,
         choices=DEALS,
         default=DEALS[0][0] 
         )
-    # Create a coin_id FK, since a Trading belongs to a Cat
+    # Create a coin_id as aFK, since a Trading belongs to a Cat
     coin = models.ForeignKey(Coin, on_delete=models.CASCADE)
 
     def __str__(self):
         # Nice method for obtaining the friendly value of a Field.choice
         return f"{self.get_deal_display()} on {self.date}"
+    
+    class Meta:
+        ordering = ['-date'] # most recent dates displayed at the top
