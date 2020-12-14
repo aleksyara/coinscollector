@@ -29,10 +29,13 @@ def coins_detail(request, coin_id):
   #find the coin that has the id of coin_id
   # it's better use Cat.objects.get rather then .filter
   coin = Coin.objects.get(id=coin_id)
-
+  #find expos that coin doesn't have and exclude them
+  expos_coin_doesnt_join = Expo.objects.exclude(id__in = coin.expos.all().values_list('id'))
   trading_form = TradingForm()
   return render(request, 'coins/detail.html', {
-    'coin': coin, 'trading_form': trading_form 
+    'coin': coin, 
+    'trading_form': trading_form,
+    'expos': expos_coin_doesnt_join 
     })
   
 def add_trading(request, coin_id):
@@ -43,6 +46,11 @@ def add_trading(request, coin_id):
     new_trading = form.save(commit=False) # - every time whe
     new_trading.coin_id = coin_id
     new_trading.save()
+  return redirect('detail', coin_id=coin_id)
+
+def assoc_expo(request, coin_id, expo_id):
+   # Note that you can pass a toy's id instead of the whole object
+  Coin.objects.get(id=coin_id).expos.add(expo_id)
   return redirect('detail', coin_id=coin_id)
 
 class CoinUpdate(UpdateView):

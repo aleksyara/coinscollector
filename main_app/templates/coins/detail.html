@@ -60,6 +60,32 @@
           <h5>No Expos :(</h5>
         {% endif %}
       </div>
+      <!-- Available Expos will come after this line -->
+      <div class="col s6">
+        <h3>Available Exhibits</h3>
+        {% if expos.count %}
+          {% for expo in expos.all %}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">
+                  A <span style="color: {{ expo.name }}">{{ expo.name }}</span> {{ expo.name }}
+                </span>
+              </div>
+              <div class="card-action">
+                <!-- posledovatelnst dolgnya match with path: 1) cat.id 2) toy.id -->
+                <form action="{% url 'assoc_expo' coin.id expo.id %}" method="post">
+                    {% csrf_token %}
+                  <button type="submit" class="btn">Add</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h5>{{coin.country}} Already Participate in All Available Exhibits</h5>
+        {% endif %}
+      </div>
+
+
 
 </div> 
 
