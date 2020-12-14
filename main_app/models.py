@@ -36,6 +36,14 @@ class Coin(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'coin_id': self.id})
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    coin = models.ForeignKey(Coin, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for coin_id: {self.coin_id} @{self.url}"
+
+
 # Add new Feeding model below Cat model
 class Trading(models.Model):
     date = models.DateField('Trading Date')

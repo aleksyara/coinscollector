@@ -18,7 +18,28 @@
         <a href="{% url 'coins_delete' coin.id %}">Delete</a>
       </div>
     </div>
+
+      <!-- Insert photo markup below this comment -->
+      {% for photo in coin.photo_set.all %}
+        <img class="responsive-img card-panel" src="{{photo.url}}">
+      {% empty %}  <!--is this empty?(we can also use IF Else statement)  -->
+        <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+      {% endfor %}
+
+      <!-- Choose file to Upload photo -->
+      <!-- enctype="multipart/form-data" - is sending multiple requests (photo, description. See line below) -->
+      <form action="{% url 'add_photo' coin.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+          {% csrf_token %}
+          <!-- type='file' - give us an option to Choose -->
+          <input type="file" name="photo-file"> 
+          <!-- <input type="text" name="description">  - if we want add a description -->
+          <br><br>
+          <input type="submit" class="btn" value="Upload Photo">
+      </form>
+
+
   </div>
+
 
   <div class="col s6">
       <!-- displaying new TradingForm -->

@@ -1,9 +1,19 @@
 from django.shortcuts import render, redirect
-from .models import Coin, Expo #require MODEL additng this line
+from .models import Coin, Expo, Photo #require MODEL additng this line
 from .forms import TradingForm
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView #Line for Expo Model
+
+
+#add these 2 lines to work with Photo
+import uuid
+import boto3
+
+#Determine the correct AWS Service Endpoin. 
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'catcollectoraleksei'
+####################################
 
 # Create your views here.
 
@@ -46,6 +56,30 @@ def add_trading(request, coin_id):
     new_trading = form.save(commit=False) # - every time whe
     new_trading.coin_id = coin_id
     new_trading.save()
+  return redirect('detail', coin_id=coin_id)
+
+def add_photo(request, coin_id):
+  #<input type="file" name="photo-file"> <-- the client input
+  # photo-file will be the "name" attribute on the <input type="file">
+  photo_file = request.FILES.get('photo-file', None) # if there is no photo-file, the property will be NONE
+  if photo_file:
+    s3 = boto3.client('s3') # initiating connection db and aws
+    # uuid.uuid4().hex[:6] <- generate an unique "key" for S3 and append photo file name
+    # if you want to specify which photo extention you allow, do it here in the key
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):] # ":]" - slicer that cut rest after dot
+    # just in case something goes wrong
+    try:
+      s3.upload_fileobj(photo_file, BUCKET, key)
+      # if I want to delete Photo
+      # print(dir(s3)) - if we want to see all available methods
+      # s.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=f"media/{item.file.name}")
+
+      # generate url string to save in our db
+      url = f"{S3_BASE_URL}{BUCKET}/{key}"
+      # Create Photo we can assign to cat_id or cat (if you have a cat object)
+      Photo.objects.create(url=url, coin_id=coin_id)
+    except:
+      print('An error occurred uploading file to S3')
   return redirect('detail', coin_id=coin_id)
 
 def assoc_expo(request, coin_id, expo_id):
