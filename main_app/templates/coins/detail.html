@@ -21,7 +21,7 @@
   </div>
 
   <div class="col s6">
-      <!-- displaying new TraidingForm -->
+      <!-- displaying new TradingForm -->
       <form action="{% url 'add_trading' coin.id %}" method="post">
         {% csrf_token %}
         {{ trading_form.as_p }}
@@ -41,6 +41,25 @@
       </tbody>
     </table>
   </div>
+    <!-- Displaying a List of Associated Expos -->
+    <hr>
+    <div class="row">
+      <div class="col s6"> 
+        <h3>{{ coin.material }}'s Coins</h3>
+        {% if coin.expos.count %}
+          {% for expo in coin.expos.all %}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">
+                  An <span style="color: {{ expo.name }}">{{ expo.name }}</span> {{ expo.name }}
+                </span>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h5>No Expos :(</h5>
+        {% endif %}
+      </div>
 
 </div> 
 

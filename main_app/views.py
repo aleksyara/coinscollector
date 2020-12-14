@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Coin #require MODEL additng this line
+from .models import Coin, Expo #require MODEL additng this line
 from .forms import TradingForm
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView #Line for Expo Model
 
 # Create your views here.
 
@@ -51,3 +52,22 @@ class CoinUpdate(UpdateView):
 class CoinDelete(DeleteView):
   model = Coin
   success_url = '/coins/'
+
+
+class ExpoList(ListView):
+  model = Expo
+
+class ExpoDetail(DetailView):
+  model = Expo
+
+class ExpoCreate(CreateView):
+  model = Expo
+  fields = '__all__'
+
+class ExpoUpdate(UpdateView):
+  model = Expo
+  fields = '__all__'
+
+class ExpoDelete(DeleteView):
+  model = Expo
+  success_url = '/expos/'

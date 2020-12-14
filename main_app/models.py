@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+import datetime
 
 # Create your models here.
 
@@ -9,12 +10,24 @@ DEALS = (
     ('D', 'Donate')
 )
 
+class Expo(models.Model):
+    name = models.CharField(max_length = 100)
+    date = models.DateField(("Date"), default=datetime.date.today)
+    location = models.CharField(max_length = 100)
+    description = models.TextField(max_length = 250)
+    
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('expos_detail', kwargs={'pk': self.id})
+
 class Coin(models.Model):
     material = models.CharField(max_length = 100)
     country = models.CharField(max_length = 100)
     century = models.IntegerField()
     description = models.TextField(max_length = 250)
-    
+    expos = models.ManyToManyField(Expo)
     
     def __str__(self):
         return self.country
