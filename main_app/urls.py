@@ -12,11 +12,14 @@ urlpatterns = [
   path('coins/<int:coin_id>/add_tradingg/', views.add_trading, name='add_trading'),
   path('coins/<int:coin_id>/add_photo/', views.add_photo, name='add_photo'),
   path('coins/<int:ccoin_id>/assoc_expo/<int:expo_id>/', views.assoc_expo, name='assoc_expo'),
+  path('coins/<int:coin_id>/unassoc_expo/<int:expo_id>/', views.unassoc_expo, name='unassoc_expo'),
   path('expos/', views.ExpoList.as_view(), name='expos_index'),
   path('expos/<int:pk>/', views.ExpoDetail.as_view(), name='expos_detail'),
   path('expos/create/', views.ExpoCreate.as_view(), name='expos_create'),
   path('expos/<int:pk>/update/', views.ExpoUpdate.as_view(), name='expos_update'),
   path('expos/<int:pk>/delete/', views.ExpoDelete.as_view(), name='expos_delete'),
-]
+  # New url pattern below for the NEW Users
+  path('accounts/signup/', views.signup, name='signup'),
+  ]
 
 

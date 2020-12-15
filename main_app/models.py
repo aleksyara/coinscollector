@@ -2,6 +2,10 @@ from django.db import models
 from django.urls import reverse
 import datetime
 
+# A User has many Coins; and a Coin belongs to a User
+# Import the User
+from django.contrib.auth.models import User
+
 # Create your models here.
 
 DEALS = (
@@ -28,6 +32,9 @@ class Coin(models.Model):
     century = models.IntegerField()
     description = models.TextField(max_length = 250)
     expos = models.ManyToManyField(Expo)
+    
+    # Add the foreign key linking to a user instance
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.country

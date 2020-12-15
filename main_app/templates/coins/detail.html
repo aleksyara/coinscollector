@@ -75,6 +75,12 @@
                   An <span style="color: {{ expo.name }}">{{ expo.name }}</span> {{ expo.name }}
                 </span>
               </div>
+              <div class="card-action">
+                <form action="{% url 'unassoc_expo' coin.id expo.id %}" method="post">
+                    {% csrf_token %}
+                  <button type="submit" class="btn">Remove</button>
+                </form>
+              </div>
             </div>
           {% endfor %}
         {% else %}
@@ -93,7 +99,7 @@
                 </span>
               </div>
               <div class="card-action">
-                <!-- posledovatelnst dolgnya match with path: 1) cat.id 2) toy.id -->
+                <!-- posledovatelnst dolgnya match with path: 1) coin.id 2) expo.id -->
                 <form action="{% url 'assoc_expo' coin.id expo.id %}" method="post">
                     {% csrf_token %}
                   <button type="submit" class="btn">Add</button>
